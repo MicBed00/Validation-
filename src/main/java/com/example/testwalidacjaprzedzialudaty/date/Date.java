@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
-@DateRangeConstrain(message = "Nadpisany message adnotacji")
+@DateRangeConstrain(message = "Nadpisany message adnotacji/// Zmienna dateFrom musi wystąpić przed zmienna dateTo")
 public class Date {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateFrom;
@@ -36,9 +36,9 @@ public class Date {
 
     @Override
     public String toString() {
-        return
-                ", ealierDate=" + dateFrom +
-                ", afterDate=" + dateTo +
+        return "Date{" +
+                "dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
                 '}';
     }
 }

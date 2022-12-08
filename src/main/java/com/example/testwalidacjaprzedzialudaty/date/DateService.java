@@ -1,32 +1,32 @@
 package com.example.testwalidacjaprzedzialudaty.date;
 
 import jakarta.validation.ConstraintViolation;
-
 import jakarta.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Service
 public class DateService {
-//    private final Validator validator;
-//
-//    @Autowired
-//    public DateService(Validator validator) {
-//        this.validator = validator;
-//    }
-//
-//    public void validationDate(Date date) {
-//        Set<ConstraintViolation<Date>> violations = validator.validate(date);
-//        if(violations.isEmpty()) {
-//            System.out.println("Date object is valid");
-//        }else {
-//            for (ConstraintViolation<Date> violation : violations) {
-//                System.out.println(violation.getPropertyPath() + " " + violation.getMessage());
-//            }
-//        }
-//    }
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final Validator validator;
+
+    public DateService(Validator validator) {
+        this.validator = validator;
+    }
+
+    public void creatDateDto(String dateFrom, String dateTo) {
+        LocalDate d1 = LocalDate.parse(dateFrom);
+        LocalDate d2 = LocalDate.parse(dateTo);
+        Date object = new Date(d1, d2);
+        Set<ConstraintViolation<Date>> errors = validator.validate(object);
+        if(!errors.isEmpty()) {
+            System.out.println("Błąd przy tworzeniu obiektu Date");
+            errors.forEach(err -> System.out.println(err.getMessage()));
+        } else {
+            System.out.println("Stworzono obiekt Date: " + object.toString());
+        }
+    }
 }
